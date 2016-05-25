@@ -22,15 +22,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.blucrm.navigationdrawer.colori;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.blucrm.navigationdrawer.colori.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -182,17 +187,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-
-
-
-
-
     //CLASSE INTERNA PER LA DEFINIZIONE DI UN TASK ASINCRONO
     //per scaricamento del JSON con i dati
 
-    private class BackgroundTask extends AsyncTask<Void,Integer,String> {
+    private class BackgroundTask extends AsyncTask<Void,Integer,ArrayList<colori>> {
 
         //Prima dell'esecuzione
         @Override
@@ -204,7 +202,7 @@ public class MainActivity extends AppCompatActivity
         }
         //Lavoro in Background
         @Override
-        protected String doInBackground(Void... params)
+        protected ArrayList<colori> doInBackground(Void... params)
         {
             URL url=null;
 
@@ -214,18 +212,46 @@ public class MainActivity extends AppCompatActivity
             { return null;}
 
             StringBuffer buffer=null;
+            ArrayList<colori> coloriModelList = new ArrayList<>();
+
             try {
+
+                //parte il collegamento
                 BufferedReader reader=new BufferedReader(new InputStreamReader(url.openStream()));
                 String tmp=null;
+                //creo un buffer e con un ciclo leggo tutto
                 buffer=new StringBuffer();
                 while((tmp=reader.readLine())!=null)
                 {
                     buffer.append(tmp);
                 }
-            } catch (IOException e)
-            { return null;}
 
-            return buffer.toString();
+                //passo ad una stringa
+                String finalJson = buffer.toString();
+                //passo la string ad un Json Array
+                JSONArray array = new JSONArray(finalJson);
+//                JSONObject parentObject = new JSONObject(finalJson);
+//                JSONArray parentArray = parentObject.getJSONArray("colori");
+
+                //cilco e metto gli oggetti colore in un ArrayList di Oggetti colore
+                for(int i=0;i<array.length();i++)
+                {
+                    colori colore = new colori();
+                    colore.setAlbumId(array.getJSONObject(i).getString("albumId"));
+                    colore.setId(array.getJSONObject(i).getString("id"));
+                    colore.setTitle(array.getJSONObject(i).getString("title"));
+                    colore.setUrl(array.getJSONObject(i).getString("url"));
+                    colore.setThumbnailUrl(array.getJSONObject(i).getString("thumbnailUrl"));
+
+                    coloriModelList.add(colore);
+                }
+                //return coloriModelList;
+
+            } catch (IOException e)
+            { return null;} catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return coloriModelList;
         }
 
         //Durante il Lavoro
@@ -238,31 +264,31 @@ public class MainActivity extends AppCompatActivity
 
         //Al termine del Lavoro
         @Override
-        protected void onPostExecute(String res)
+        protected void onPostExecute(ArrayList<colori> res)
         {
             super.onPostExecute(res);
             progress.dismiss();
             if (res!=null)
             {
-                try {
-
-                    JSONArray array = new JSONArray(res);
-                    String[] colori=new String[array.length()];
-                    for(int i=0;i<array.length();i++)
-                    {
-                        String albumId=array.getJSONObject(i).getString("albumId");
-                        String id=array.getJSONObject(i).getString("id");
-                        String title=array.getJSONObject(i).getString("title");
-                        String url=array.getJSONObject(i).getString("url");
-                        String thumbnailUrl=array.getJSONObject(i).getString("thumbnailUrl");
-                        colori[i]=albumId+" "+id+" "+title +" "+url +" "+thumbnailUrl;
-                    }
-                }
-                catch (JSONException e)
-                { }
-//                Toast.makeText(getApplicationContext(), //contesto è il rifiremto alla app stessa
-//                        res, //messaggio
-//                        Toast.LENGTH_LONG).show();// Metodo  per la visualizzazione a schermo
+//                try {
+//
+//                    JSONArray array = new JSONArray(res);
+//                    String[] colori=new String[array.length()];
+//                    for(int i=0;i<array.length();i++)
+//                    {
+//                        String albumId=array.getJSONObject(i).getString("albumId");
+//                        String id=array.getJSONObject(i).getString("id");
+//                        String title=array.getJSONObject(i).getString("title");
+//                        String url=array.getJSONObject(i).getString("url");
+//                        String thumbnailUrl=array.getJSONObject(i).getString("thumbnailUrl");
+//                        colori[i]=albumId+" "+id+" "+title +" "+url +" "+thumbnailUrl;
+//                    }
+//                }
+//                catch (JSONException e)
+//                { }
+                Toast.makeText(getApplicationContext(), //contesto è il rifiremto alla app stessa
+                        "FINITO!!!?!?!", //messaggio
+                        Toast.LENGTH_LONG).show();// Metodo  per la visualizzazione a schermo
             }
         }
     }
