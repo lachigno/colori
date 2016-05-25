@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Children"
+    tools:showIn="@layout/activity_child">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="180dp"
+            android:id="@+id/image_Foto_little"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/foto" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Titolo"
+            android:id="@+id/textViewTitolo"
+            android:layout_alignTop="@+id/image_Foto_little"
+            android:layout_toEndOf="@+id/image_Foto_little"
+            android:layout_marginStart="36dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Sottotitolo"
+            android:id="@+id/textViewStottotitolo"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/textViewTitolo"
+            android:layout_alignStart="@+id/textViewTitolo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Corpo"
+            android:id="@+id/textViewCorpo"
+            android:layout_below="@+id/textViewStottotitolo"
+            android:layout_alignStart="@+id/textViewStottotitolo"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_below="@+id/image_Foto_little"
+            android:text="@string/large_text" />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>
