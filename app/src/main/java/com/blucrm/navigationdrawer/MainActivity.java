@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity
 //                JSONObject parentObject = new JSONObject(finalJson);
 //                JSONArray parentArray = parentObject.getJSONArray("colori");
 
-                //cilco e metto gli oggetti colore in un ArrayList di Oggetti colore
+                //ciclo e metto gli oggetti colore in un ArrayList di Oggetti colore
                 for(int i=0;i<array.length();i++)
                 {
                     colori colore = new colori();
