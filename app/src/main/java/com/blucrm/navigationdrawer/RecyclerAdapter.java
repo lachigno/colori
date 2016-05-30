@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.blucrm.navigationdrawer.colori;
 
 import java.util.ArrayList;
 
@@ -15,8 +16,8 @@ import java.util.ArrayList;
  * Created by a.lachi on 24/05/2016.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    ArrayList<String> arrayList;
-    public RecyclerAdapter(ArrayList<String> arrayList) {
+    ArrayList<colori> arrayList;
+    public RecyclerAdapter(ArrayList<colori> arrayList) {
         this.arrayList = arrayList;
     }
 
@@ -29,7 +30,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         //identifico la posizione del figlio inizioando sda 1
         //holder.info.setText(String.format("%s",position +1));
-        holder.info.setText(arrayList.get(position));
+
+        // Associo alla vista i valori dell'array list di oggetti
+        //holder.info.setText(arrayList.get(position));
+        holder.info.setText(arrayList.get(position).getTitle());
+        holder.subinfo.setText(arrayList.get(position).getUrl());
 
     }
 
@@ -41,11 +46,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return arrayList.size();
     }
 
+    //Qui definisco i legami tra gli oggetti della scheda
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView info;
+        TextView subinfo;
         public ViewHolder(View itemView) {
             super(itemView);
             info = (TextView)itemView.findViewById(R.id.info_text);
+            subinfo = (TextView)itemView.findViewById(R.id.info_subtext);
             itemView.setOnClickListener(this);
         }
 
@@ -53,7 +61,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public void onClick(View v) {
             //v.getContext().startActivity(Children.class);
             Intent intent = new Intent(v.getContext(),Children.class);
-            intent.putExtra("titolo",arrayList.get(getAdapterPosition()));
+            //intent.putExtra("titolo",arrayList.get(getAdapterPosition().getId()));
             v.getContext().startActivity(intent);
 
             //creazione di un Intento

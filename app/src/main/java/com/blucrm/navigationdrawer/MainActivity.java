@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         //reciclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //definisco il suo adapter
-        reciclerView.setAdapter(new RecyclerAdapter(arrayList));
+//        reciclerView.setAdapter(new RecyclerAdapter(arrayList));
     }
 
     @Override
@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity
             progress.dismiss();
             if (res!=null)
             {
+                reciclerView.setAdapter(new RecyclerAdapter(res));
 //                try {
 //
 //                    JSONArray array = new JSONArray(res);
@@ -286,9 +287,9 @@ public class MainActivity extends AppCompatActivity
 //                }
 //                catch (JSONException e)
 //                { }
-                Toast.makeText(getApplicationContext(), //contesto è il rifiremto alla app stessa
-                        "FINITO!!!?!?!", //messaggio
-                        Toast.LENGTH_LONG).show();// Metodo  per la visualizzazione a schermo
+//                Toast.makeText(getApplicationContext(), //contesto è il rifiremto alla app stessa
+//                        "FINITO!!!?!?!", //messaggio
+//                        Toast.LENGTH_LONG).show();// Metodo  per la visualizzazione a schermo
             }
         }
     }
