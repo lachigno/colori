@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.blucrm.navigationdrawer.colori;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Request;
+
+import com.bumptech.glide.Glide;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 /**
  * Created by a.lachi on 24/05/2016.
@@ -69,10 +67,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //        });
 //        builder.build().load(arrayList.get(position).getThumbnailUrl()).into(holder.img);
 
-        Picasso.with(mContext).load( arrayList.get(position).getThumbnailUrl())
-                .error(R.drawable.no)
-                .placeholder(R.drawable.foto)
+        Glide.with(mContext)
+                .load(arrayList.get(position).getThumbnailUrl())
                 .into(holder.img);
+//.load("http://inthecheesefactory.com/uploads/source/glidepicasso/cover.jpg")
+
+//        Picasso.with(mContext).load( arrayList.get(position).getThumbnailUrl())
+//                .error(R.drawable.no)
+//                .placeholder(R.drawable.foto)
+//                .into(holder.img);
+
 //        new DownloadImageTask((ImageView) holder.img).execute("http://placehold.it/150/bc9589");
 
         //holder.url.setTag(arrayList.get(position).getUrl().toString());
@@ -83,8 +87,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         //30 a casao
-        return 10;
-        //return arrayList.size();
+        //return 10;
+        return arrayList.size();
     }
 
     //Qui definisco i legami tra gli oggetti della scheda

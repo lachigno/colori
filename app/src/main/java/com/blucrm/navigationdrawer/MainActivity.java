@@ -25,9 +25,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.blucrm.navigationdrawer.colori;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 
 import com.blucrm.navigationdrawer.DbManager;
 import com.blucrm.navigationdrawer.DbHelper;
