@@ -1,6 +1,7 @@
 package com.blucrm.navigationdrawer;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -8,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.blucrm.navigationdrawer.colori;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import com.blucrm.navigationdrawer.DbManager;
+import com.blucrm.navigationdrawer.DbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +53,9 @@ public class MainActivity extends AppCompatActivity
     //Inserirsco l'URL di scaricamento
     private static final String ADDRESS = "http://jsonplaceholder.typicode.com/photos";
 
+    private DbManager db = null;
+    private CursorAdapter adapter;
+
     RecyclerView reciclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         //android.support.v7.widget.Toolbar dentro "app_bar_main.xml"
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         //Configuro la spinner per il caricamento
         progress=new ProgressDialog(this);
@@ -95,11 +107,11 @@ public class MainActivity extends AppCompatActivity
 
         //Controllo se siamo Portait o Landscape per definire il numero di colonne da visualizzare
         int numberOfColumns = 2;
-        //Check your orientation either in your OnCreate or after it
-        if(this.getResources().getConfiguration().orientation ==
-                this.getResources().getConfiguration()
-                        .ORIENTATION_LANDSCAPE)
-            numberOfColumns = 3;
+//        //Check your orientation either in your OnCreate or after it
+//        if(this.getResources().getConfiguration().orientation ==
+//                this.getResources().getConfiguration()
+//                        .ORIENTATION_LANDSCAPE)
+//            numberOfColumns = 3;
 
         //definisco un layout manager di tipo Griglia
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,numberOfColumns);
@@ -127,6 +139,18 @@ public class MainActivity extends AppCompatActivity
 
         //definisco il suo adapter
 //        reciclerView.setAdapter(new RecyclerAdapter(arrayList));
+
+        //-----------------------------------------------------------------------------------------------------------------------------
+        //CREO IL MIO DB
+        //DbManager  DatabaseDeiColori= new DbManager(this);
+        db = new DbManager (getApplicationContext());
+        Cursor crs=db.query();
+
+
+
+        //reciclerView.setAdapter(new RecyclerAdapter(MainActivity.this, res));
+
+        //-----------------------------------------------------------------------------------------------------------------------------
     }
 
     @Override
@@ -236,6 +260,8 @@ public class MainActivity extends AppCompatActivity
                 //ciclo e metto gli oggetti colore in un ArrayList di Oggetti colore
                 for(int i=0;i<array.length();i++)
                 {
+
+                    //db.save(array.getJSONObject(i).getString("albumId"),array.getJSONObject(i).getString("id"),array.getJSONObject(i).getString("title"),array.getJSONObject(i).getString("url"),array.getJSONObject(i).getString("thumbnailUrl"));
                     colori colore = new colori();
                     colore.setAlbumId(array.getJSONObject(i).getString("albumId"));
                     colore.setId(array.getJSONObject(i).getString("id"));
@@ -270,7 +296,8 @@ public class MainActivity extends AppCompatActivity
             progress.dismiss();
             if (res!=null)
             {
-                reciclerView.setAdapter(new RecyclerAdapter(res));
+                //collego i dati al suo ADAPTER
+                //reciclerView.setAdapter(new RecyclerAdapter(MainActivity.this, res));
 //                try {
 //
 //                    JSONArray array = new JSONArray(res);
