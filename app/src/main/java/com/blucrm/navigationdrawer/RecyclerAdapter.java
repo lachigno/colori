@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -17,11 +18,16 @@ import android.widget.TextView;
 import com.blucrm.navigationdrawer.colori;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Request;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 /**
  * Created by a.lachi on 24/05/2016.
@@ -51,7 +57,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //holder.info.setText(arrayList.get(position));
         holder.info.setText(arrayList.get(position).getTitle());
         holder.subinfo.setText(arrayList.get(position).getUrl());
-        Picasso.with(mContext).load(arrayList.get(position).getThumbnailUrl())
+
+//        Picasso.Builder builder = new Picasso.Builder (mContext);
+//        builder.listener(new Picasso.Listener()
+//        {
+//            @Override
+//            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+//            {
+//                exception.printStackTrace();
+//            }
+//        });
+//        builder.build().load(arrayList.get(position).getThumbnailUrl()).into(holder.img);
+
+        Picasso.with(mContext).load( arrayList.get(position).getThumbnailUrl())
                 .error(R.drawable.no)
                 .placeholder(R.drawable.foto)
                 .into(holder.img);

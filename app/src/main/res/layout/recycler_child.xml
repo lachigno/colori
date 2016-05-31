@@ -30,23 +30,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/thumbnail"
-                android:maxLines="3"
                 android:padding="8dp"
                 android:text="Titolo"
                 android:textColor="#222"
                 android:textStyle="bold"
-                android:textSize="22dp" />
+                android:textSize="22dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                />
 
             <TextView
                 android:id="@+id/info_subtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/info_text"
-                android:maxLines="3"
                 android:padding="8dp"
                 android:text="Sottotitolo"
                 android:textColor="#666"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true" />
 
         </RelativeLayout>
         <!--<TextView-->

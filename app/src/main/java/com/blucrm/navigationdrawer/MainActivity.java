@@ -107,11 +107,11 @@ public class MainActivity extends AppCompatActivity
 
         //Controllo se siamo Portait o Landscape per definire il numero di colonne da visualizzare
         int numberOfColumns = 2;
-//        //Check your orientation either in your OnCreate or after it
-//        if(this.getResources().getConfiguration().orientation ==
-//                this.getResources().getConfiguration()
-//                        .ORIENTATION_LANDSCAPE)
-//            numberOfColumns = 3;
+        //Check your orientation either in your OnCreate or after it
+        if(this.getResources().getConfiguration().orientation ==
+                this.getResources().getConfiguration()
+                        .ORIENTATION_LANDSCAPE)
+            numberOfColumns = 3;
 
         //definisco un layout manager di tipo Griglia
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,numberOfColumns);
@@ -146,9 +146,14 @@ public class MainActivity extends AppCompatActivity
         db = new DbManager (getApplicationContext());
         Cursor crs=db.query();
 
+        //conto i record
+        int recordCount = new DbManager(this).count();
 
+        if (recordCount>0) {
+            ArrayList<colori> listaDB = (ArrayList<colori>) db.read();
+            reciclerView.setAdapter(new RecyclerAdapter(MainActivity.this, listaDB));
+        }
 
-        //reciclerView.setAdapter(new RecyclerAdapter(MainActivity.this, res));
 
         //-----------------------------------------------------------------------------------------------------------------------------
     }
@@ -261,15 +266,15 @@ public class MainActivity extends AppCompatActivity
                 for(int i=0;i<array.length();i++)
                 {
 
-                    //db.save(array.getJSONObject(i).getString("albumId"),array.getJSONObject(i).getString("id"),array.getJSONObject(i).getString("title"),array.getJSONObject(i).getString("url"),array.getJSONObject(i).getString("thumbnailUrl"));
-                    colori colore = new colori();
-                    colore.setAlbumId(array.getJSONObject(i).getString("albumId"));
-                    colore.setId(array.getJSONObject(i).getString("id"));
-                    colore.setTitle(array.getJSONObject(i).getString("title"));
-                    colore.setUrl(array.getJSONObject(i).getString("url"));
-                    colore.setThumbnailUrl(array.getJSONObject(i).getString("thumbnailUrl"));
+                    db.save(array.getJSONObject(i).getString("albumId"),array.getJSONObject(i).getString("id"),array.getJSONObject(i).getString("title"),array.getJSONObject(i).getString("url"),array.getJSONObject(i).getString("thumbnailUrl"));
+//                    colori colore = new colori();
+//                    colore.setAlbumId(array.getJSONObject(i).getString("albumId"));
+//                    colore.setId(array.getJSONObject(i).getString("id"));
+//                    colore.setTitle(array.getJSONObject(i).getString("title"));
+//                    colore.setUrl(array.getJSONObject(i).getString("url"));
+//                    colore.setThumbnailUrl(array.getJSONObject(i).getString("thumbnailUrl"));
 
-                    coloriModelList.add(colore);
+//                    coloriModelList.add(colore);
                 }
                 //return coloriModelList;
 

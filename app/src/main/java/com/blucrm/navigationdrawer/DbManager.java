@@ -5,6 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Bitmap;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by a.lachi on 30/05/2016.
@@ -71,4 +77,59 @@ public class DbManager {
         return crs;
     }
 
-}
+    //conteggio dei record
+    public int count() {
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        String sql = "SELECT * FROM colori";
+        int recordCount = db.rawQuery(sql, null).getCount();
+        db.close();
+
+        return recordCount;
+
+    }
+
+    public List<colori> read() {
+
+        List<colori> recordsList = new ArrayList<colori>();
+
+        String sql = "SELECT * FROM colori ORDER BY id DESC";
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                String albumId = cursor.getString(cursor.getColumnIndex("albumId"));
+                String id = cursor.getString(cursor.getColumnIndex("id"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String url = cursor.getString(cursor.getColumnIndex("url"));
+                String thumbnailUrl = cursor.getString(cursor.getColumnIndex("thumbnailUrl"));
+
+
+                //int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+
+
+                colori colore = new colori();
+
+                colore.setAlbumId(albumId);
+                colore.setId(id);
+                colore.setTitle(title);
+                colore.setUrl(url);
+                colore.setThumbnailUrl(thumbnailUrl);
+
+                recordsList.add(colore);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return recordsList;
+    }
+
+    //STORAGE IMMAGINI DA INTERNET
+    }
